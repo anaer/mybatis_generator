@@ -42,8 +42,6 @@
             <property name="methodNameCalculator" value="extended" />
         </javaClientGenerator>
 
-        <table tableName="stdfield"/>
-        <table tableName="op_log"/>
-        <table tableName="fast_query"/>
+        <table tableName="view_manage"/>
     </context>
 </generatorConfiguration>
