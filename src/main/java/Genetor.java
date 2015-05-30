@@ -15,20 +15,34 @@ public class Genetor {
 
     public static void main(String[] args) {
         cleanOldOutput();
-        // generateMbgConfiguration();
+        generateMbgConfiguration();
 
     }
 
+    /**
+     * 清理旧的输出.
+     */
     private static void cleanOldOutput() {
-        File javaDir = new File("src/main/java/com");
-        if (javaDir.isDirectory()) {
-            javaDir.delete();
+        String[] paths = { "src/main/java/com", "src/main/resources/com" };
+        for (String path : paths) {
+            File file = new File(path);
+            deleteFile(file);
         }
+    }
 
-        File xmlDir = new File("src/main/resources/com");
-        if (xmlDir.isDirectory()) {
-            xmlDir.delete();
+    /**
+     * 删除文件.
+     *
+     * @param file 文件
+     */
+    private static void deleteFile(File file) {
+        if (file.isDirectory()) {
+            File[] files = file.listFiles();
+            for (File temp : files) {
+                deleteFile(temp);
+            }
         }
+        file.delete();
     }
 
     private static void generateMbgConfiguration() {

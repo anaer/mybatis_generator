@@ -89,11 +89,12 @@ public class XmlElement extends Element {
     public String getFormattedContent(int indentLevel) {
         StringBuilder sb = new StringBuilder();
 
-        OutputUtilities.xmlIndent(sb, indentLevel);
         // 一级元素之间 添加空行
         if (indentLevel == 1) {
             OutputUtilities.newLine(sb);
         }
+        OutputUtilities.xmlIndent(sb, indentLevel);
+
         sb.append('<');
         sb.append(name);
 
