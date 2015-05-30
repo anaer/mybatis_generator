@@ -12,46 +12,60 @@ import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.DefaultShellCallback;
 
 public class Genetor {
+
     public static void main(String[] args) {
-	generateMbgConfiguration();
+        cleanOldOutput();
+        // generateMbgConfiguration();
 
     }
 
-    private static void generateMbgConfiguration() {
-	/*
-	 * Mybatis自带Generator工具生成相应东西
-	 */
-	List<String> warnings = new ArrayList<String>();
-	boolean overwrite = true;
-	File configFile = new File("src/main/resources/generatorConfig.xml");
-	System.out.println(configFile.getAbsolutePath());
-	if (!configFile.exists()) {
-	    System.out.println("配置文件不存在!");
-	    return;
-	}
-	ConfigurationParser cp = new ConfigurationParser(warnings);
-	Configuration config = null;
-	try {
-	    config = cp.parseConfiguration(configFile);
-	} catch (IOException e) {
-	    e.printStackTrace();
-	} catch (XMLParserException e) {
-	    e.printStackTrace();
-	}
-	DefaultShellCallback callback = new DefaultShellCallback(overwrite);
-	try {
-	    MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
-	    myBatisGenerator.generate(null);
-	} catch (InvalidConfigurationException e) {
-	    e.printStackTrace();
-	} catch (SQLException e) {
-	    e.printStackTrace();
-	} catch (IOException e) {
-	    e.printStackTrace();
-	} catch (InterruptedException e) {
-	    e.printStackTrace();
-	}
+    private static void cleanOldOutput() {
+        File javaDir = new File("src/main/java/com");
+        if (javaDir.isDirectory()) {
+            javaDir.delete();
+        }
 
-	System.out.println("生成Mybatis配置成功！");
+        File xmlDir = new File("src/main/resources/com");
+        if (xmlDir.isDirectory()) {
+            xmlDir.delete();
+        }
+    }
+
+    private static void generateMbgConfiguration() {
+        /*
+         * Mybatis自带Generator工具生成相应东西
+         */
+        List<String> warnings = new ArrayList<String>();
+        boolean overwrite = true;
+        File configFile = new File("src/main/resources/generatorConfig-myweb.xml");
+        System.out.println(configFile.getAbsolutePath());
+        if (!configFile.exists()) {
+            System.out.println("配置文件不存在!");
+            return;
+        }
+        ConfigurationParser cp = new ConfigurationParser(warnings);
+        Configuration config = null;
+        try {
+            config = cp.parseConfiguration(configFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (XMLParserException e) {
+            e.printStackTrace();
+        }
+        DefaultShellCallback callback = new DefaultShellCallback(overwrite);
+        try {
+            MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
+            myBatisGenerator.generate(null);
+        } catch (InvalidConfigurationException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("生成Mybatis配置成功！");
     }
 }
