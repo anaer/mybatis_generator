@@ -5,17 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.mybatis.generator.api.MyBatisGenerator;
+import org.mybatis.generator.api.ProgressCallback;
+import org.mybatis.generator.api.ShellCallback;
+import org.mybatis.generator.api.VerboseProgressCallback;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.DefaultShellCallback;
 
-public class Genetor {
+public class Generator {
 
     public static void main(String[] args) {
         cleanOldOutput();
-        generateMbgConfiguration();
+        // generateMbgConfiguration();
 
     }
 
@@ -45,10 +48,10 @@ public class Genetor {
         file.delete();
     }
 
+    /**
+     * Mybatis自带Generator工具生成相应东西
+     */
     private static void generateMbgConfiguration() {
-        /*
-         * Mybatis自带Generator工具生成相应东西
-         */
         List<String> warnings = new ArrayList<String>();
         boolean overwrite = true;
         File configFile = new File("src/main/resources/generatorConfig-myweb.xml");
@@ -57,19 +60,14 @@ public class Genetor {
             System.out.println("配置文件不存在!");
             return;
         }
-        ConfigurationParser cp = new ConfigurationParser(warnings);
-        Configuration config = null;
         try {
-            config = cp.parseConfiguration(configFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (XMLParserException e) {
-            e.printStackTrace();
-        }
-        DefaultShellCallback callback = new DefaultShellCallback(overwrite);
-        try {
+            ConfigurationParser cp = new ConfigurationParser(warnings);
+            Configuration config = cp.parseConfiguration(configFile);
+            ShellCallback callback = new DefaultShellCallback(overwrite);
             MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
-            myBatisGenerator.generate(null);
+            // 处理回调 打印日志
+            ProgressCallback proCallBack = new VerboseProgressCallback();
+            myBatisGenerator.generate(proCallBack);
         } catch (InvalidConfigurationException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -78,6 +76,12 @@ public class Genetor {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } catch (XMLParserException e) {
+            e.printStackTrace();
+        }
+
+        for (String error : warnings) {
+            System.out.println(error);
         }
 
         System.out.println("生成Mybatis配置成功！");
