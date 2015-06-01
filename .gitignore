@@ -18,4 +18,4 @@ target
 .classpath
 .project
 .settings
-
+src/main/resources/generatorConfig-wjs.xml
