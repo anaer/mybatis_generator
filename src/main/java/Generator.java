@@ -18,8 +18,7 @@ public class Generator {
 
     public static void main(String[] args) {
         cleanOldOutput();
-        // generateMbgConfiguration();
-
+        generateMbgConfiguration();
     }
 
     /**
