@@ -71,6 +71,16 @@
                             <followSymlinks>false</followSymlinks>
                             <useDefaultExcludes>true</useDefaultExcludes>
                         </fileset>
+                        <fileset>
+                            <directory>src/main/java/net</directory>
+                            <followSymlinks>false</followSymlinks>
+                            <useDefaultExcludes>true</useDefaultExcludes>
+                        </fileset>
+                        <fileset>
+                            <directory>src/main/resources/net</directory>
+                            <followSymlinks>false</followSymlinks>
+                            <useDefaultExcludes>true</useDefaultExcludes>
+                        </fileset>
                     </filesets>
                 </configuration>
             </plugin>
