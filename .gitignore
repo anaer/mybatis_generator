@@ -21,3 +21,5 @@ target
 src/main/resources/generatorConfig-wjs.xml
 src/main/resources/generatorConfig-itn.xml
 src/main/resources/generatorConfig-witkey.xml
+.classpath
+src/main/resources/generatorConfig-itn_community.xml
